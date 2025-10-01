@@ -788,7 +788,7 @@ function ServiceHistoryView({ cars, services, selectedCar, setSelectedCar }) {
                               className="w-full h-32 object-cover rounded-lg cursor-pointer border-2 border-gray-200 hover:border-blue-500 transition"
                               onClick={() => setLightboxImage(service.photoURLs[idx])}
                             />
-                            
+                            <a
                               href={service.photoURLs[idx]}
                               download
                               onClick={(e) => e.stopPropagation()}
