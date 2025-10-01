@@ -5,7 +5,6 @@ import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDocs, q
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { Menu, X, Plus, Car, History, Settings, Download, Trash2, Edit2, Camera, Calendar, Gauge, Wrench, ChevronDown, ChevronUp, LogOut, Eye, Copy, RefreshCw } from 'lucide-react';
 
-// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBzq4vs7hJEqUhqQxj1AJJHhQk8sh4ZEh4",
   authDomain: "piblo-b3172.firebaseapp.com",
@@ -16,13 +15,11 @@ const firebaseConfig = {
   measurementId: "G-1K692JRFE7"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-// Image compression utility
 const compressImage = async (file, maxWidth) => {
   return new Promise((resolve) => {
     const reader = new FileReader();
@@ -56,7 +53,6 @@ const compressImage = async (file, maxWidth) => {
   });
 };
 
-// Main App Component
 export default function PibloApp() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -67,7 +63,6 @@ export default function PibloApp() {
   const [selectedCar, setSelectedCar] = useState(null);
   const [isPublicView, setIsPublicView] = useState(false);
 
-  // Auth state listener
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
@@ -79,7 +74,6 @@ export default function PibloApp() {
     return unsubscribe;
   }, []);
 
-  // Check for public share link
   useEffect(() => {
     const path = window.location.pathname;
     if (path.startsWith('/share/')) {
@@ -193,7 +187,6 @@ export default function PibloApp() {
   );
 }
 
-// Navigation Menu Component
 function NavigationMenu({ currentView, setCurrentView }) {
   return (
     <nav className="p-4">
@@ -247,7 +240,6 @@ function NavigationMenu({ currentView, setCurrentView }) {
   );
 }
 
-// Auth View Component
 function AuthView() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState('');
@@ -319,7 +311,6 @@ function AuthView() {
   );
 }
 
-// Dashboard Component
 function Dashboard({ cars, services, setCurrentView }) {
   const totalServices = services.length;
   const recentServices = services.slice(0, 5);
@@ -394,7 +385,6 @@ function Dashboard({ cars, services, setCurrentView }) {
   );
 }
 
-// Add Service View Component
 function AddServiceView({ cars, services, setServices, user }) {
   const [formData, setFormData] = useState({
     carId: '',
@@ -648,7 +638,6 @@ function AddServiceView({ cars, services, setServices, user }) {
   );
 }
 
-// Service History View Component
 function ServiceHistoryView({ cars, services, selectedCar, setSelectedCar }) {
   const [expandedService, setExpandedService] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
@@ -842,7 +831,6 @@ function ServiceHistoryView({ cars, services, selectedCar, setSelectedCar }) {
   );
 }
 
-// Manage Cars View Component
 function ManageCarsView({ cars, setCars, user }) {
   const [editingCar, setEditingCar] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -1256,7 +1244,6 @@ function ManageCarsView({ cars, setCars, user }) {
   );
 }
 
-// Public Share View Component
 function PublicShareView({ car, services }) {
   const [expandedService, setExpandedService] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
